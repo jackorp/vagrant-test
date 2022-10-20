@@ -1,0 +1,47 @@
+summary: Test for general vagrant functionality in Fedora
+
+prepare:
+  - name: ruby
+    how: install
+    package:
+      - ruby
+      - rubygems
+      - rubygem-listen
+      - rubygem-erubi
+      - rubygem-rexml
+      - rubygem-erubis
+      - rubygem-bcrypt_pbkdf
+      - rubygem-ed25519
+      - rubygem-net-ssh
+      - rubygem-net-scp
+      - rubygem-i18n
+      - rubygem-childprocess
+      - rubygem-ruby-libvirt
+      - rubygem-fog-core
+      - rubygem-fog-json
+      - rubygem-fog-libvirt
+
+#  - name: vagrant
+#    how: install
+#    package:
+#      - vagrant
+#      - vagrant-libvirt
+#      - vagrant-cloud
+#      - vagrant-sshfs
+#      - vagrant-managed-servers
+
+  - name: libvirt
+    how: shell
+    script: systemctl enable --now libvirtd
+
+  - name: nfs
+    how: shell
+    script: systemctl enable --now nfs-server
+
+execute:
+  script: |
+    vagrant up
+    sleep 1
+    vagrant ssh -c 'echo "OK"' | grep 'OK'
+
+require: [vagrant, vagrant-libvirt]
