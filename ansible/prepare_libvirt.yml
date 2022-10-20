@@ -1,0 +1,17 @@
+---
+- hosts: all
+  name: Enable libvirt service
+  become: true
+  tasks:
+  - name: Enable libvirt qemu
+    ansible.builtin.systemd:
+      name: virtqemud
+      enabled: true
+      state: started
+  - name: Enable libvirt network
+    ansible.builtin.systemd:
+      name: virtnetworkd
+      enabled: true
+      state: started
+  - name: Reboot to ensure virtualization is ready
+    ansible.builtin.reboot:
