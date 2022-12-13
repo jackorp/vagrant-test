@@ -5,21 +5,7 @@ prepare:
     how: install
     package:
       - ruby
-      - rubygems
-      - rubygem-listen
-      - rubygem-erubi
-      - rubygem-rexml
-      - rubygem-erubis
-      - rubygem-bcrypt_pbkdf
-      - rubygem-ed25519
-      - rubygem-net-ssh
-      - rubygem-net-scp
-      - rubygem-i18n
-      - rubygem-childprocess
-      - rubygem-ruby-libvirt
-      - rubygem-fog-core
-      - rubygem-fog-json
-      - rubygem-fog-libvirt
+      - vagrant-libvirt
 
 #  - name: vagrant
 #    how: install
@@ -34,14 +20,20 @@ prepare:
     how: shell
     script: systemctl enable --now libvirtd
 
-  - name: nfs
-    how: shell
-    script: systemctl enable --now nfs-server
-
+discover:
+  how: fmf
+#
+#  - name: nfs
+#    how: shell
+#    script: systemctl enable --now nfs-server
 execute:
-  script: |
-    vagrant up
-    sleep 1
-    vagrant ssh -c 'echo "OK"' | grep 'OK'
+  how: tmt
+/:
+  inherit: false
 
-require: [vagrant, vagrant-libvirt]
+/modified:
+  discover:
+    how: fmf
+    modified-only: true
+    modified-ref: reference/main
+    modified-url: https://src.fedoraproject.org/tests/vagrant
