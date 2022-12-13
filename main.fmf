@@ -28,12 +28,10 @@ discover:
 #    script: systemctl enable --now nfs-server
 execute:
   how: tmt
-/:
-  inherit: false
 
 /modified:
   discover:
     how: fmf
     modified-only: true
-    modified-ref: reference/main
-    modified-url: https://src.fedoraproject.org/tests/vagrant
+    modified-ref: reference/tmt
+    modified-url: https://github.com/jackorp/vagrant-test
