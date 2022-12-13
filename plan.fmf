@@ -1,5 +1,8 @@
 summary: Test for general vagrant functionality in Fedora
 
+discover:
+  how: fmf
+
 prepare:
   - name: ruby
     how: install
@@ -20,8 +23,6 @@ prepare:
     how: shell
     script: systemctl enable --now libvirtd
 
-discover:
-  how: fmf
 #
 #  - name: nfs
 #    how: shell
