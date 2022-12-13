@@ -1,7 +1,7 @@
 summary: Test for general vagrant functionality in Fedora
 
 discover:
-  how: fmf
+    how: fmf
 
 prepare:
   - name: ruby
