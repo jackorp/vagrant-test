@@ -1,0 +1,4 @@
+summary: Smoke test for vagrant
+test: echo "ok"
+component:
+- vagrant
