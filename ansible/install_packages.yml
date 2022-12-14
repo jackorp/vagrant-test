@@ -1,0 +1,11 @@
+---
+- hosts: all
+  name: Install requred packages for tests
+  become: true
+  tasks:
+  - name: Install packages for basic vagrant libvirt functionality
+    ansible.builtin.dnf:
+      name:
+        - ruby
+        - vagrant-libvirt
+      state: present

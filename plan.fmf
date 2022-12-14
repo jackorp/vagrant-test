@@ -1,14 +1,19 @@
 summary: Test for general vagrant functionality in Fedora
 
 discover:
-    how: fmf
+  how: fmf
 
 prepare:
-  - name: ruby
-    how: install
-    package:
-      - ruby
-      - vagrant-libvirt
+  how: ansible
+  playbook:
+    - ansible/install_packages.yml
+    - ansible/prepare_libvirt.yml
+  extra-args: '-vvv'
+  # - name: ruby
+  #   how: install
+  #   package:
+  #     - ruby
+  #     - vagrant-libvirt
 
 #  - name: vagrant
 #    how: install
@@ -19,9 +24,9 @@ prepare:
 #      - vagrant-sshfs
 #      - vagrant-managed-servers
 
-  - name: libvirt
-    how: shell
-    script: systemctl enable --now libvirtd
+  # - name: libvirt
+  #   how: shell
+  #   script: systemctl enable --now virtqemud.service
 
 #
 #  - name: nfs
