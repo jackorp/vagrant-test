@@ -1,4 +1,4 @@
 summary: Smoke test for vagrant
-test: vagrant up && vagrant ssh -c "echo OK" | grep "OK" ; vagrant destroy -f
+test: (lsmod | grep kvm) && (vagrant up && vagrant ssh -c "echo OK" | grep "OK") && vagrant destroy -f
 component:
 - vagrant
