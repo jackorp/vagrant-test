@@ -1,4 +1,5 @@
 summary: Smoke test for vagrant
 test: vagrant up && (vagrant ssh -c "echo 'vagrant_up OK'" | grep "vagrant_up OK") && vagrant destroy -f
+duration: 30m
 component:
 - vagrant
