@@ -1,4 +1,4 @@
 summary: Smoke test for vagrant
-test: (cat /sys/module/kvm_intel/parameters/nested | grep "Y") && vagrant up --debug && (vagrant ssh -c "echo 'vagrant_up OK" | grep "vagrant_up OK") && vagrant destroy -f
+test: vagrant up --debug && (vagrant ssh -c "echo 'vagrant_up OK" | grep "vagrant_up OK") && vagrant destroy -f
 component:
 - vagrant
