@@ -1,11 +1,14 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+BOX = ENV.fetch('BOX', 'fedora/37-cloud-base')
+DRIVER = ENV.fetch('DRIVER', 'qemu')
+
 Vagrant.configure("2") do |config|
-  config.vm.define "rawhide" do |rawhide|
-    rawhide.vm.box = "fedora/35-cloud-base"
+  config.vm.hostname = "this.is.my.vagrant.box"
 
-    rawhide.vm.hostname = "this.is.my.vagrant.box"
+  config.vm.box = BOX
 
-    rawhide.vm.provider :libvirt do |libvirt|
-      libvirt.driver = "kvm"
-    end
+  config.vm.provider :libvirt do |lv|
+    lv.driver = DRIVER
   end
 end
