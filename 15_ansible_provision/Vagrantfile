@@ -1,9 +1,26 @@
-Vagrant.configure("2") do |config|
-  config.vm.box = "centos/7"
-  config.vm.synced_folder ".", "/vagrant", type: "nfs"
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-  config.vm.provider :libvirt do |libvirt|
-    libvirt.nested = false
-    libvirt.memory = 2048
+Vagrant.configure("2") do |config|
+  config.vm.define "1MT-RHEL-9.0.0-20210503.5-Beta-42024-2021-05-07-10-34"
+  config.vm.box_check_update = false
+  config.vm.box = "1MT-RHEL-9.0.0-20210503.5-Beta"
+  config.vm.box_url = "http://liver2.lab.eng.brq.redhat.com/~1minutetip/1MT-RHEL-9.0.0-20210503.5-Beta.json"
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.ssh.private_key_path = "/home/lzachar/Doing/vagrant/1minutetip-ecdsa"
+  config.vm.provider :libvirt do |domain|
+    domain.default_prefix = "lzachar"
+    domain.driver = "kvm"
+    domain.host = 'localhost'
+    domain.uri = 'qemu:///system'
+    domain.cpus = 1
+    domain.memory = 2048
   end
+  #
+  # Run Ansible from the Vagrant Host
+  #
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+  end
+
 end
