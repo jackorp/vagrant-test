@@ -1,0 +1,16 @@
+summary: Vagrant VM synchronized folder via nfs
+test: |
+    vagrant up && \
+    (vagrant ssh -c 'ssh -c "let \"n=11*11\" ; echo \${n}" | grep 121') && \
+    vagrant destroy -f
+duration: 30m
+contact:
+  - jprokop@redhat.com
+  - pvalena@redhat.com
+tag:
+  - nfs
+
+adjust+:
+  enabled: false
+  when: distro == fedora
+  beacuse: Default NFS configuration does not work with default vagrant installation on Fedora
