@@ -1,0 +1,9 @@
+summary: Disabled NFS folder share does not show up on the system
+test: |
+    vagrant up && \
+    (vagrant ssh -c 'ls /vagrant 2>/dev/null' | grep -v 'test.sdfsdfsdf.test') && \
+    vagrant destroy -f
+duration: 30m
+contact:
+  - jprokop@redhat.com
+  - pvalena@redhat.com
