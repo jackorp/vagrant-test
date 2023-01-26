@@ -7,3 +7,7 @@ duration: 30m
 contact:
   - jprokop@redhat.com
   - pvalena@redhat.com
+
+tag:
+  - sshfs
+  - sync_folder
