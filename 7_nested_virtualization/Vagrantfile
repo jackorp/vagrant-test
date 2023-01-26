@@ -1,9 +1,12 @@
 memory = ENV["MEMORY"] || 2048
+BOX = ENV.fetch('BOX', 'fedora/37-cloud-base')
+DRIVER = ENV.fetch('DRIVER', 'qemu')
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "fedora/35-cloud-base"
+  config.vm.box = BOX
 
   config.vm.provider :libvirt do |libvirt|
+    libvirt.driver = DRIVER
     libvirt.nested = true
     libvirt.memory = memory
   end
