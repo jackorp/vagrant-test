@@ -9,8 +9,4 @@ contact:
   - pvalena@redhat.com
 tag:
   - nfs
-
-adjust+:
-  enabled: false
-  when: distro == fedora
-  beacuse: Default NFS configuration does not work with default vagrant installation on Fedora
+  - sync_folder
