@@ -1,3 +1,11 @@
+BOX = ENV.fetch('BOX', 'fedora/37-cloud-base')
+DRIVER = ENV.fetch('DRIVER', 'qemu')
+
 Vagrant.configure("2") do |config|
+  config.vm.box = BOX
   config.vm.synced_folder ".", "/vagrant", :type => "nfs", disabled: true
+
+  config.vm.provider :libvirt do |lv|
+    lv.driver = DRIVER
+  end
 end
