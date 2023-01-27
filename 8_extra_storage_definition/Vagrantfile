@@ -4,8 +4,8 @@ DRIVER = ENV.fetch('DRIVER', 'qemu')
 Vagrant.configure("2") do |config|
   config.vm.box = BOX
 
-  config.vm.provider :libvirt do |domain|
+  config.vm.provider :libvirt do |lv|
     lv.driver = DRIVER
-    domain.storage :file, :size => '5G'
+    lv.storage :file, :size => '5G'
   end
 end
