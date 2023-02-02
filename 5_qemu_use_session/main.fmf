@@ -1,8 +1,5 @@
 summary: Boot VM with qemu:///session
-test: |
-    vagrant up && \
-    (vagrant ssh -c 'ssh -c "let \"n=11*11\" ; echo \${n}" | grep 121') && \
-    vagrant destroy -f
+test: ./test_vagrant.sh
 duration: 30m
 contact:
   - jprokop@redhat.com

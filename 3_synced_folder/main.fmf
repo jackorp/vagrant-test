@@ -1,8 +1,6 @@
 summary: Custom synced folder path with default options.
 test: |
-    vagrant up && \
-    (vagrant ssh -c "cat /lizmap/main.fmf" | grep "Synced folder") && \
-    vagrant destroy -f
+    test_vagrant.sh 'vagrant ssh -c "cat /lizmap/main.fmf" | grep "Synced folder"'
 duration: 30m
 contact:
   - jprokop@redhat.com

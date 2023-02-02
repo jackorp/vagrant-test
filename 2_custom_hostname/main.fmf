@@ -1,8 +1,6 @@
 summary: Set a custom hostname in a VM.
 test: |
-    vagrant up && \
-    (vagrant ssh -c "hostname" | grep "this.is.my.vagrant.box") && \
-    vagrant destroy -f
+    ./test_vagrant.sh "vagrant ssh -c 'hostname' | grep 'this.is.my.vagrant.box'"
 duration: 30m
 contact:
   - jprokop@redhat.com

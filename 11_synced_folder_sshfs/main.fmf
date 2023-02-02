@@ -1,8 +1,6 @@
 summary: Shared synchronized folder via sshfs
 test: |
-    vagrant up && \
-    (vagrant ssh -c 'ls /vagrant 2>/dev/null' | grep 'test.cdfcdeg.test') && \
-    vagrant destroy -f
+    ./test_vagrant.sh "vagrant ssh -c 'ls /vagrant 2>/dev/null' | grep 'test.cdfcdeg.test'"
 duration: 30m
 contact:
   - jprokop@redhat.com

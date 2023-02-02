@@ -1,8 +1,5 @@
 summary: Basic smoke test to bring up a VM
-test: |
-    vagrant up && \
-    (vagrant ssh -c "echo 'vagrant_up OK'" | grep "vagrant_up OK") && \
-    vagrant destroy -f
+test: ./test_vagrant.sh "vagrant ssh -c \"echo 'vagrant_up OK'\" | grep \"vagrant_up OK\""
 duration: 30m
 contact:
   - jprokop@redhat.com

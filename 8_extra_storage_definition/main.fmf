@@ -1,8 +1,6 @@
 summary: Vagrant VM configured with additional disk.
 test: |
-    vagrant up && \
-    (vagrant ssh -c 'lsblk' | grep '5G') && \
-    vagrant destroy -f
+    ./test_vagrant.sh "vagrant ssh -c 'lsblk' | grep '5G'"
 duration: 30m
 contact:
   - jprokop@redhat.com
