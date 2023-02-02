@@ -26,7 +26,7 @@ function exec_test_as_user() {
 }
 
 function as_unprivileged_user() {
-  sudo -u "$1" -i bash -c "vagrant up"
+  sudo -u "$1" -i bash -c "echo $PWD; vagrant up"
 }
 
 if as_unprivileged_user "$USR"; then
