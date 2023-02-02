@@ -21,15 +21,18 @@ fi
 trap "vagrant destroy -f" ERR
 
 function exec_test_as_user() {
-  sudo -u "$1" -i bash -c "set -x; $TEST" | tee -a /dev/stderr \
+  su "$1" -c "set -x; $TEST" | tee -a /dev/stderr \
     | grep -q 121 && echo '--> Ok'
 }
 
 function as_unprivileged_user() {
-  sudo -u "$1" -i bash -c "echo $PWD; vagrant up"
+  su "$USR" -c "$1"
 }
 
-if as_unprivileged_user "$USR"; then
+mkdir .vagrant
+chown "$USR":"$USR" .vagrant
+
+if as_unprivileged_user "vagrant up"; then
   exec_test_as_user "$USR"
 
   vagrant destroy -f
