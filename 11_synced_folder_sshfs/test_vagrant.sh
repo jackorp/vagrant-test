@@ -26,9 +26,11 @@ fi
 # * Reboot at least once (tmt-reboot), ideally only once. Needed for proper libvirt
 # * cleanup volumes after test run...
 function cleanup() {
+  set +eE
   vol_match=$(basename "$(pwd)")
   as_unprivileged_user "vagrant destroy -f"
   as_unprivileged_user "virsh vol-list --pool default | grep \"${vol_match}\" | cut -d' ' -f2 | xargs -rn1 virsh vol-delete --pool default"
+  set -eE
 }
 
 trap cleanup ERR
