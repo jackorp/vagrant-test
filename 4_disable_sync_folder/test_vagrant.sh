@@ -10,6 +10,10 @@ shift
 
 set -eE
 
+if [ $TMT_REBOOT_COUNT -lt 1 ]; then
+  tmt-reboot -t 600
+fi
+
 if [ -z "$USR" ]; then
   USR="test"
 fi
@@ -18,7 +22,15 @@ if [ -z "$TEST" ]; then
   TEST='vagrant ssh -c "let \"n=11*11\" ; echo \${n}"'
 fi
 
-trap "vagrant destroy -f" ERR
+#TODO:
+# * Reboot at least once (tmt-reboot), ideally only once. Needed for proper libvirt
+# * cleanup volumes after test run...
+function cleanup() {
+  vol_match=$(basename "$(pwd)")
+  virsh vol-list --pool default | grep "${vol_match}" | xargs -rn1 virsh vol-delete --pool default
+}
+
+trap "vagrant destroy -f; cleanup" ERR
 
 function as_unprivileged_user() {
   current_pwd=$(pwd)
@@ -37,7 +49,9 @@ if as_unprivileged_user "vagrant up"; then
   exec_test_unprivileged
 
   vagrant destroy -f
+  cleanup
   exit 0
 else
+  cleanup
   exit 1
 fi
