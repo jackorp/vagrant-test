@@ -27,12 +27,11 @@ fi
 # * cleanup volumes after test run...
 function cleanup() {
   vol_match=$(basename "$(pwd)")
+  as_unprivileged_user "vagrant destroy -f"
   as_unprivileged_user "virsh vol-list --pool default | grep \"${vol_match}\" | cut -d' ' -f2 | xargs -rn1 virsh vol-delete --pool default"
 }
 
-trap 'vagrant destroy -f;
-as_unprivileged_user vol_match=$(basename $(pwd)); virsh vol-list --pool default | grep "${vol_match}" | cut -d" " -f2 | xargs -rn1 virsh vol-delete --pool default
-' ERR
+trap cleanup ERR
 
 function as_unprivileged_user() {
   current_pwd=$(pwd)
