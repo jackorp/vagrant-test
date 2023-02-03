@@ -20,20 +20,21 @@ fi
 
 trap "vagrant destroy -f" ERR
 
-function exec_test_as_user() {
-  su "$1" -c "set -x; $TEST" | tee -a /dev/stderr \
-    | grep -q 121 && echo '--> Ok'
+function as_unprivileged_user() {
+  current_pwd=$(pwd)
+  sudo -u "$USR" -i bash -c "set -x; cd '${current_pwd}' || exit 1 ; $1"
 }
 
-function as_unprivileged_user() {
-  su "$USR" -c "$1"
+function exec_test_unprivileged() {
+  as_unprivileged_user "$TEST" | tee -a /dev/stderr \
+    | grep -q 121 && echo '--> Ok'
 }
 
 mkdir .vagrant
 chown "$USR":"$USR" .vagrant
 
 if as_unprivileged_user "vagrant up"; then
-  exec_test_as_user "$USR"
+  exec_test_unprivileged
 
   vagrant destroy -f
   exit 0
