@@ -10,9 +10,9 @@ shift
 
 set -eE
 
-if [ $TMT_REBOOT_COUNT -lt 1 ]; then
-  tmt-reboot -t 600
-fi
+# if [ $TMT_REBOOT_COUNT -lt 1 ]; then
+#   tmt-reboot -t 600
+# fi
 
 if [ -z "$USR" ]; then
   USR="test"
@@ -30,7 +30,7 @@ function cleanup() {
   virsh vol-list --pool default | grep "${vol_match}" | xargs -rn1 virsh vol-delete --pool default
 }
 
-trap "vagrant destroy -f; cleanup" ERR
+trap "vagrant destroy -f; as_unprivileged_user cleanup" ERR
 
 function as_unprivileged_user() {
   current_pwd=$(pwd)
