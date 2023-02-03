@@ -30,7 +30,10 @@ function cleanup() {
   virsh vol-list --pool default | grep "${vol_match}" | cut -d' ' -f2 | xargs -rn1 virsh vol-delete --pool default
 }
 
-trap "vagrant destroy -f; as_unprivileged_user cleanup" ERR
+trap 'vagrant destroy -f;
+as_unprivileged_user vol_match=$(basename $(pwd));
+virsh vol-list --pool default | grep "${vol_match}" | cut -d" " -f2 | xargs -rn1 virsh vol-delete --pool default
+' ERR
 
 function as_unprivileged_user() {
   current_pwd=$(pwd)
