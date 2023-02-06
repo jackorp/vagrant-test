@@ -10,6 +10,8 @@ shift
 
 PRESERVE_ENV="DRIVER,BOX"
 
+EXIT_CODE=0
+
 set -eE
 
 # if [ $TMT_REBOOT_COUNT -lt 1 ]; then
@@ -45,6 +47,7 @@ function as_unprivileged_user() {
 function exec_test_unprivileged() {
   as_unprivileged_user "$TEST" | tee -a /dev/stderr \
     | grep -q 121 && echo '--> Ok'
+  EXIT_CODE=$?
 }
 
 mkdir .vagrant
@@ -55,8 +58,9 @@ if as_unprivileged_user "vagrant up"; then
 
   vagrant destroy -f
   cleanup
-  exit 0
+  exit $EXIT_CODE
 else
   cleanup
+  echo "--> 'vagrant up' Failed"
   exit 1
 fi
