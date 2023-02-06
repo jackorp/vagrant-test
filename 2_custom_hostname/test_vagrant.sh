@@ -8,6 +8,8 @@ shift
 USR="$1"
 shift
 
+PRESERVE_ENV="DRIVER,BOX"
+
 set -eE
 
 # if [ $TMT_REBOOT_COUNT -lt 1 ]; then
@@ -37,7 +39,7 @@ trap cleanup ERR
 
 function as_unprivileged_user() {
   current_pwd=$(pwd)
-  sudo -u "$USR" -i bash -c "set -x; cd '${current_pwd}' || exit 1 ; $1"
+  sudo --preserve-env="${PRESERVE_ENV}" -u "$USR" -i bash -c "set -x; cd '${current_pwd}' || exit 1 ; $1"
 }
 
 function exec_test_unprivileged() {
