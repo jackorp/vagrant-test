@@ -23,7 +23,7 @@ if [ -z "$USR" ]; then
 fi
 
 if [ -z "$TEST" ]; then
-  TEST='vagrant ssh -c "let \"n=11*11\" ; echo \${n}"'
+  TEST='vagrant ssh -c "let \"n=11*11\" ; echo \${n}" | tee -a /dev/stderr | grep -q 121'
 fi
 
 #TODO:
@@ -49,8 +49,7 @@ function as_unprivileged_user() {
 }
 
 function exec_test_unprivileged() {
-  as_unprivileged_user "$TEST" | tee -a /dev/stderr \
-    | grep -q 121 && echo '--> Ok'
+  as_unprivileged_user "$TEST" && echo '--> Ok'
   EXIT_CODE=$?
 }
 
