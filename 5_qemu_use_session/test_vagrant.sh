@@ -45,7 +45,7 @@ trap cleanup ERR
 function as_unprivileged_user() {
   current_pwd=$(pwd)
   sudo --preserve-env="${PRESERVE_ENV}" -u "$USR" -i bash -c "set -x; cd '${current_pwd}' || exit 1 ; $1"
-  echo "dbg--> Command '$1' exited with '$?'"
+  echo "dbg--> Command '$1' exited with '$?'" 1>&2
 }
 
 function exec_test_unprivileged() {
