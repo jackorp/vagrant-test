@@ -57,7 +57,6 @@ chown "$USR":"$USR" .vagrant
 if as_unprivileged_user "vagrant up"; then
   exec_test_unprivileged
 
-  vagrant destroy -f
   cleanup
   exit $EXIT_CODE
 else
