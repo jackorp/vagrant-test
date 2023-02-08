@@ -1,0 +1,12 @@
+---
+- hosts: all
+  name: Add user for use with qemu:///session
+  become: true
+  tasks:
+    - name: Add user with libvirt group
+      ansible.builtin.user:
+        name: test
+        state: present
+        uid: 1122
+        groups: libvirt
+        append: true

@@ -1,0 +1,46 @@
+---
+- hosts: all
+  become: true
+  name: Enable NFS functionality on host
+  tasks:
+    - name: Install nfs and firewall tools
+      ansible.builtin.dnf:
+        name:
+          - nfs-utils
+          - python3-firewall
+          - firewalld
+        state: present
+
+    - name: Start and enable NFS services
+      ansible.builtin.systemd:
+        name: nfs-server
+        enabled: true
+        state: started
+
+    - name: Allow NFS3 firewall service
+      ansible.posix.firewalld:
+        zone: libvirt
+        service: nfs3
+        permanent: true
+        state: enabled
+
+    - name: Allow NFS firewall service
+      ansible.posix.firewalld:
+        zone: libvirt
+        service: nfs
+        permanent: true
+        state: enabled
+
+    - name: Allow MountD firewall service
+      ansible.posix.firewalld:
+        zone: libvirt
+        service: mountd
+        permanent: true
+        state: enabled
+
+    - name: Allow rpc-bind firewall service
+      ansible.posix.firewalld:
+        zone: libvirt
+        service: rpc-bind
+        permanent: true
+        state: enabled

@@ -3,9 +3,12 @@
   name: Install requred packages for tests
   become: true
   tasks:
-  - name: Install packages for basic vagrant libvirt functionality
-    ansible.builtin.dnf:
-      name:
-        - ruby
-        - vagrant-libvirt
-      state: present
+    - name: Install packages for basic vagrant libvirt functionality
+      ansible.builtin.dnf:
+        name:
+          - ruby
+          - vagrant-libvirt
+            # Config files for vagrant's networking.
+          - libvirt-daemon-config-network
+          - libvirt-daemon-config-nwfilter
+        state: present

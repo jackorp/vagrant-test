@@ -1,0 +1,52 @@
+summary: Test for general vagrant functionality in Fedora
+
+discover:
+  how: fmf
+
+prepare:
+  - how: ansible
+    playbook:
+      - ansible/install_packages.yml
+      - ansible/prepare_libvirt.yml
+      - ansible/add_user_with_libvirt.yml
+    extra-args: '-vvv'
+
+execute:
+  how: tmt
+
+environment:
+  DRIVER: "kvm"
+
+/fedora:
+  environment+:
+    BOX: "fedora/37-cloud-base"
+  /base:
+    discover+:
+      filter+: "tag:base|tag:qemu_session"
+  /qemu_connection:
+    discover+:
+      filter+: "tag:qemu_system"
+  /nfs_shared_folder:
+    discover+:
+      filter+: "tag:nfs"
+    adjust+:
+      # NFS currently requires additional tinkering.
+      enabled: false
+      prepare+:
+      - how: ansible
+        playbook:
+          - ansible/prepare_nfs.yml
+  /sshfs_shared_folder:
+    discover+:
+      filter+: "tag:sshfs"
+    adjust+:
+      prepare+:
+      - how: install
+        package:
+          - vagrant-sshfs
+
+/centos-8:
+  discover+:
+    filter+: "tag:base"
+  environment+:
+    BOX: "centos/8"
