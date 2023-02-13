@@ -1,0 +1,9 @@
+summary: Set up port forwarding in default config
+test: ./test_vagrant.sh
+duration: 30m
+contact:
+  - jprokop@redhat.com
+  - pvalena@redhat.com
+
+tag:
+  - fedora
