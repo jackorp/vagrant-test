@@ -2,6 +2,8 @@ summary: Test for general vagrant functionality in Fedora
 
 discover:
   how: fmf
+  url: https://github.com/jackorp/vagrant-test
+  ref: tmt-ci
 
 prepare:
   - how: ansible
@@ -23,6 +25,9 @@ environment:
   /base:
     discover+:
       filter+: "tag:base|tag:qemu_session"
+  /extended:
+    discover+:
+      filter+: "tag:fedora"
   /qemu_connection:
     discover+:
       filter+: "tag:qemu_system"
@@ -50,3 +55,8 @@ environment:
     filter+: "tag:base"
   environment+:
     BOX: "centos/8"
+/centos-7:
+  discover+:
+    filter+: "tag:centos7"
+  environment+:
+    BOX: "centos/7"
