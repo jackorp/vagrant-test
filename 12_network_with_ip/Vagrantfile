@@ -1,7 +1,15 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+BOX = ENV.fetch('BOX', 'fedora/37-cloud-base')
+DRIVER = ENV.fetch('DRIVER', 'qemu')
+
 Vagrant.configure("2") do |config|
-  config.vm.box = "centos/7"
+  config.vm.box = BOX
+
+  config.vm.network "public_network", ip: "192.168.122.210"
+
   config.vm.provider :libvirt do |libvirt|
     libvirt.qemu_use_session = false
+    libvirt.driver = DRIVER
   end
-  config.vm.network "public_network", ip: "192.168.122.210"
 end

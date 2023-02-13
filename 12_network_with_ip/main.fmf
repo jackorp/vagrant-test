@@ -1,0 +1,9 @@
+summary: Create a VM with custom IP on CentOS 7
+test: ./test_vagrant.sh
+duration: 30m
+contact:
+  - jprokop@redhat.com
+  - pvalena@redhat.com
+
+tag:
+  - centos7
