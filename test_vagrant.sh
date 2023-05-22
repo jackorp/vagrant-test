@@ -40,8 +40,6 @@ function cleanup() {
   set -eE
 }
 
-trap cleanup ERR
-
 function as_unprivileged_user() {
   current_pwd=$(pwd)
   sudo --preserve-env="${PRESERVE_ENV}" -u "$USR" -i bash -c "set -x; cd '${current_pwd}' || exit 1 ; $1"
