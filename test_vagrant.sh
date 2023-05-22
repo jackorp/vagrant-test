@@ -34,9 +34,14 @@ function cleanup() {
   vol_match=$(basename "$(pwd)")
   as_unprivileged_user "vagrant destroy -f"
   as_unprivileged_user "virsh vol-list --pool default | grep \"${vol_match}\" | cut -d' ' -f2 | xargs -rn1 virsh vol-delete --pool default"
-  domain=$(as_unprivileged_user "virsh list --name | grep \"${vol_match}\"")
-  as_unprivileged_user "echo \"${domain}\" | xargs -rn1 virsh destroy"
-  as_unprivileged_user "echo \"${domain}\" | xargs -rn1 virsh undefine"
+
+  domain=$(as_unprivileged_user "virsh list --name | grep \"${vol_match}\"" || echo "")
+
+  if [ -n "$domain" ]; then
+    as_unprivileged_user "echo \"${domain}\" | xargs -rn1 virsh destroy"
+    as_unprivileged_user "echo \"${domain}\" | xargs -rn1 virsh undefine"
+  fi
+
   set -eE
 }
 
