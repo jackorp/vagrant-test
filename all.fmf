@@ -21,7 +21,7 @@ environment:
 
 /fedora:
   environment+:
-    BOX: "fedora/37-cloud-base"
+    BOX: "fedora/41-cloud-base"
   /base:
     discover+:
       filter+: "tag:base|tag:qemu_session"
@@ -50,13 +50,8 @@ environment:
         package:
           - vagrant-sshfs
 
-/centos-8:
+/centos-9:
   discover+:
     filter+: "tag:base"
   environment+:
-    BOX: "centos/8"
-/centos-7:
-  discover+:
-    filter+: "tag:centos7"
-  environment+:
-    BOX: "centos/7"
+    BOX: "centos/stream9"
